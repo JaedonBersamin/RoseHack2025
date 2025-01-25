@@ -6,6 +6,19 @@ import Header from "../components/header";
 
 export default function Layout() {
     return (
-        <View> </View>
+        <TailwindProvider>
+            <View className="flex-1">
+                <View className="flex-row items-center justify-center h-auto w-full bg-gray-200">
+                    <Header title="Grade Weights" />
+                </View>
+                <View className="flex-row items-center justify-center h-auto w-full bg-gray-200">
+                    <Header title="Grading Scale" />
+                </View>
+
+                <View className="flex-1">
+                    <TabNavigator />
+                </View>
+            </View>
+        </TailwindProvider>
     );
 }
