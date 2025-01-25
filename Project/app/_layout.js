@@ -16,7 +16,7 @@ export default function Layout() {
             <NavigationIndependentTree>
                 <NavigationContainer>
                     <View className="h-full w-full justify-end">
-                        <Stack.Navigator initialRouteName="Home">
+                        <Stack.Navigator initialRouteName="Register">
                             <Stack.Screen name="Home" component={Home} />
                             <Stack.Screen name="Register" component={Register} />
                         </Stack.Navigator>
