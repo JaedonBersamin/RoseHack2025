@@ -1,18 +1,11 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Index from "./index"; // Import the home page
-
-const Tab = createBottomTabNavigator();
+import React from "react";
+import { View } from "react-native";
+import {TailwindProvider} from "tailwindcss-react-native";
+import TabNavigator from "../components/navbar";
+import Header from "../components/header";
 
 export default function Layout() {
     return (
-        <Tab.Navigator
-            screenOptions={{
-                tabBarActiveTintColor: "green",
-                tabBarInactiveTintColor: "gray",
-                headerShown: false, // Hide the header if not needed
-            }}
-        >
-            <Tab.Screen name="Home" component={Index} />
-        </Tab.Navigator>
+        <View> </View>
     );
 }
