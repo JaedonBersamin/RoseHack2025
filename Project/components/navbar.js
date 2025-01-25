@@ -1,10 +1,11 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Index from "../app/index";
+import Home from "../app/home";
 
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
+
     return (
         <Tab.Navigator
             screenOptions={{
@@ -13,7 +14,7 @@ export default function TabNavigator() {
                 headerShown: false,
             }}
         >
-            <Tab.Screen name="Home" component={Index} />
+            <Tab.Screen name="Home" component={Home} />
         </Tab.Navigator>
     );
 }

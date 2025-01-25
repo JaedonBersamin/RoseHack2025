@@ -1,10 +1,10 @@
-import React from "react";
-import { View } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import {TailwindProvider} from "tailwindcss-react-native";
-import TabNavigator from "../components/navbar";
 import Header from "../components/header";
+import TabNavigator from "../components/navbar";
 
-export default function Layout() {
+
+export default function Home() {
     return (
         <TailwindProvider>
             <View className="flex-1">
@@ -16,7 +16,7 @@ export default function Layout() {
                 </View>
 
                 <View className="flex-1">
-                    <TabNavigator />
+                    {/*<TabNavigator />*/}
                 </View>
             </View>
         </TailwindProvider>
