@@ -26,7 +26,24 @@ export default function Register() {
 
     const handleRegister = async () => {
         try {
-            const response = await fetch('http://localhost:8082/api/users', {
+            let usersResponse = await fetch('http://localhost:8082/api/users', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            let users = await usersResponse.json();
+
+            for (const user of users) {
+                console.log("email", user.email, "username", user.username);
+                if (user.email === email || user.username === username) {
+                    console.error("Email or username taken");
+                    return;
+                }
+            }
+
+            let createResponse = await fetch('http://localhost:8082/api/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -42,8 +59,8 @@ export default function Register() {
                 }),
             });
 
-            const data = await response.json();
-            if (!response.ok) {
+            const data = await createResponse.json();
+            if (!createResponse.ok) {
                 console.error('Error creating user:', data.error);
                 return;
             }

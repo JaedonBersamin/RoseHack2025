@@ -4,17 +4,14 @@ const Schema = mongoose.Schema;
 const { taskSchema} = require('./taskModel');
 
 const userSchema = new Schema({
-    username: { type: String, required: true, unique: true },
+    username: { type: String, required: true },
     password: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
+    email: { type: String, required: true },
     streak: { type: Number, required: true },
     tasks: {type: [taskSchema], default: []},
     level: {type: Number, required: true},
     xp_points: {type: Number, required: true},
 }, {timestamps: true});
-
-userSchema.index({ username: 1 }, { unique: true });
-userSchema.index({ email: 1 }, { unique: true });
 
 module.exports = mongoose.model('User', userSchema);
 
