@@ -12,7 +12,7 @@ const Stack = createStackNavigator();
 export default function Layout() {
     return (
         <TailwindProvider>
-            <Stack.Navigator initialRouteName="Register">
+            <Stack.Navigator initialRouteName="Login">
                 <Stack.Screen name="Home" component={Home} />
                 <Stack.Screen name="Register" component={Register} />
                 <Stack.Screen name="Login" component={Login}/>

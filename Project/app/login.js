@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 import {
     View,
     Text,
@@ -10,6 +10,37 @@ import {
 } from 'react-native';
 
 export default function Login({ navigation }) {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    async function handleLogin() {
+        try {
+            const response = await fetch('http://localhost:8082/api/users', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            const data = await response.json();
+            if (!response.ok) {
+                console.error('Error creating user:', data.error);
+                return;
+            }
+
+            console.log('Users retrieved:', data);
+            for (const user of data) {
+                if (user.email === email && user.password === password) {
+                    console.log("User found");
+                    return;
+                }
+            }
+            console.log("User not found");
+        } catch (error) {
+            console.error('Error retrieving user:', error.message);
+        }
+    }
+
     // Animation value for fade-in
     const fadeAnim = useRef(new Animated.Value(0)).current;
 
@@ -41,18 +72,20 @@ export default function Login({ navigation }) {
                 <TextInput
                     style={styles.input}
                     placeholder="Enter your email"
+                    onChangeText={setEmail}
                 />
                 <Text style={styles.label}>Password</Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Enter your password"
                     secureTextEntry
+                    onChangeText={setPassword}
                 />
                 <TouchableOpacity
                     style={styles.loginButton}
                     onPress={() => console.log('Login button pressed')}
                 >
-                    <Text style={styles.loginButtonText}>Login</Text>
+                    <Text style={styles.loginButtonText} onPress={handleLogin}>Login</Text>
                 </TouchableOpacity>
             </Animated.View>
 
