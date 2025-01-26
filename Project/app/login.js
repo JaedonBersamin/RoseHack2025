@@ -6,14 +6,20 @@ import {
     TouchableOpacity,
     StyleSheet,
     Animated,
-    Image
+    Image,
+    Alert
 } from 'react-native';
+import Home from "./home"
 
 export default function Login({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     async function handleLogin() {
+        if (!email || !password) {
+            alert("Please enter a valid email and password");
+        }
+
         try {
             const response = await fetch('http://localhost:8082/api/users', {
                 method: 'GET',
@@ -24,20 +30,22 @@ export default function Login({ navigation }) {
 
             const data = await response.json();
             if (!response.ok) {
-                console.error('Error creating user:', data.error);
+                console.error('Error retrieving users:', data.error);
                 return;
             }
 
             console.log('Users retrieved:', data);
-            for (const user of data) {
-                if (user.email === email && user.password === password) {
-                    console.log("User found");
-                    return;
-                }
+            const user = data.find(user => user.email === email && user.password === password);
+
+            if (user) {
+                console.log('User found');
+                navigation.navigate({Home});
+            } else {
+                alert('Invalid email or password.');
             }
-            console.log("User not found");
         } catch (error) {
             console.error('Error retrieving user:', error.message);
+            Alert.alert('Error', 'Unable to login. Please try again later.', [{ text: 'OK' }]);
         }
     }
 
@@ -58,8 +66,13 @@ export default function Login({ navigation }) {
         <View style={styles.container}>
             {/* Fade-in contents */}
             <Animated.View style={[styles.innerContainer, { opacity: fadeAnim }]}>
+                <Image
+                    style={styles.logo}
+                    source={require('../assets/logo.png')}
+                />
+
                 <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>
-                    <Text style={{fontSize: 50, fontWeight: 'bold', fontFamily: 'System', color: 'green', outline:100 }}>
+                    <Text style={{ fontSize: 50, fontWeight: 'bold', fontFamily: 'System', color: 'green', outline: 100 }}>
                         Fresh
                     </Text>
                     <Text style={{ fontSize: 50, fontWeight: 'bold', fontFamily: 'System', color: 'brown', marginLeft: 10 }}>
@@ -72,34 +85,36 @@ export default function Login({ navigation }) {
                 <TextInput
                     style={styles.input}
                     placeholder="Enter your email"
+                    placeholderTextColor="#888"
                     onChangeText={setEmail}
                 />
                 <Text style={styles.label}>Password</Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Enter your password"
+                    placeholderTextColor="#888"
                     secureTextEntry
                     onChangeText={setPassword}
                 />
                 <TouchableOpacity
-                    style={styles.loginButton}
-                    onPress={() => console.log('Login button pressed')}
+                    style={[styles.loginButton, { marginTop: 15 }]}
+                    onPress={(() => {
+                        console.log('Login button pressed');
+
+                        if (email && password) {
+                            navigation.navigate('Home');
+                        }
+                    })}
                 >
                     <Text style={styles.loginButtonText} onPress={handleLogin}>Login</Text>
                 </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.bottomButton}
+                    onPress={() => navigation.navigate('Register')}
+                >
+                    <Text style={styles.bottomButtonText}>Create a new account</Text>
+                </TouchableOpacity>
             </Animated.View>
-
-            <Image
-                style={styles.logo}
-                source={require('../assets/logo.png')}
-            />
-            {/* Button at the bottom to create a new account */}
-            <TouchableOpacity
-                style={styles.bottomButton}
-                onPress={() => navigation.navigate('Register')}
-            >
-                <Text style={styles.bottomButtonText}>Create a new account</Text>
-            </TouchableOpacity>
         </View>
     );
 }
@@ -107,24 +122,24 @@ export default function Login({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f5f5dc', // cream color
-        justifyContent: 'space-between',
+        backgroundColor: '#f6f6f6', // cream color
+        justifyContent: 'space-between', // Center the contents vertically
         alignItems: 'center',
-        paddingVertical: 40,
+        paddingVertical: 15,
     },
     innerContainer: {
         width: '80%',
         alignItems: 'center',
     },
     logo: {
-        width: 200,
-        height: 200,
-        marginBottom: 40,
+        width: 150,
+        height: 150,
+        marginBottom: -50,
     },
     header: {
         fontFamily: 'Verdana',
         fontSize: 24,
-        marginBottom: 16,
+        marginBottom: 45,
     },
     label: {
         fontFamily: 'Verdana',
@@ -149,6 +164,7 @@ const styles = StyleSheet.create({
         borderRadius: 9999,
         paddingVertical: 12,
         paddingHorizontal: 24,
+        marginBottom: 16, // Add spacing between the two buttons
     },
     loginButtonText: {
         color: '#fff',
@@ -156,14 +172,14 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     bottomButton: {
+        borderRadius: 9999,
         paddingVertical: 12,
         paddingHorizontal: 16,
         alignSelf: 'center',
     },
     bottomButtonText: {
+        color: 'darkgreen',
         fontFamily: 'Verdana',
         fontSize: 16,
-        color: 'blue',
-        textDecorationLine: 'underline',
     },
 });

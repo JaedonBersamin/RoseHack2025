@@ -15,15 +15,15 @@ const XP_NEEDED = 100;
 export default function App() {
     // Simple list of tasks, each with 10 XP
     const initialTasks = [
-        { id: 1, text: "Complete daily workout", xp: 10 },
-        { id: 2, text: "Finish coding challenge", xp: 10 },
-        { id: 3, text: "Read 10 pages of a book", xp: 10 },
-        { id: 4, text: "Practice piano for 30 minutes", xp: 10 },
-        { id: 5, text: "Write in journal", xp: 10 },
-        { id: 6, text: "Meditate for 10 minutes", xp: 10 },
-        { id: 7, text: "Learn 5 new vocabulary words", xp: 10 },
-        { id: 8, text: "Drink 2 liters of water", xp: 10 },
-        { id: 9, text: "Organize workspace", xp: 10 },
+        { id: 1, text: "You", level: 26},
+        { id: 2, text: "Roro", level: 23 },
+        { id: 3, text: "Andrew", level: 20},
+        { id: 4, text: "Patrick", level: 19},
+        { id: 5, text: "Brady", level: 17},
+        { id: 6, text: "David", level: 16},
+        { id: 7, text: "Alecia", level: 15},
+        { id: 8, text: "Sam", level: 12},
+        { id: 9, text: "George", level: 9},
     ];
 
     const [tasks, setTasks] = useState(initialTasks);
@@ -37,7 +37,7 @@ export default function App() {
 
         // Update total XP
         setTotalXP((prevXP) => {
-            let newXP = prevXP + task.xp;
+            let newXP = prevXP + task.level;
             if (newXP >= XP_NEEDED) {
                 newXP = newXP - XP_NEEDED; // Simple "level up" reset
             }
@@ -100,7 +100,6 @@ export default function App() {
     );
 }
 
-// Sub-component to handle each task's fade-out
 function TaskItem({ item, onComplete }) {
     // Animate from opacity=1 to opacity=0
     const fadeAnim = useRef(new Animated.Value(1)).current;
@@ -119,14 +118,9 @@ function TaskItem({ item, onComplete }) {
 
     return (
         <Animated.View style={[styles.taskBox, { opacity: fadeAnim }]}>
-            {/* Checkbox (Pressable) */}
-            <Pressable onPress={handlePress} style={styles.checkbox}>
-                <Text style={styles.checkmark}>✓</Text>
-            </Pressable>
-
             {/* Task text + XP */}
             <Text style={styles.taskText}>
-                {item.text} <Text style={styles.xpText}>({item.xp} XP)</Text>
+                {item.text} <Text style={styles.xpText}>(LVL {item.level})</Text>
             </Text>
         </Animated.View>
     );
@@ -195,11 +189,13 @@ const styles = StyleSheet.create({
     },
     // Individual task box
     taskBox: {
-        flexDirection: "row",
-        alignItems: "center",
+        flexDirection: "row", // Keep the row layout for checkbox and text
+        alignItems: "center", // Center items horizontally
+        justifyContent: "center", // Center items vertically
+        width: "100%",
+        height: '20%',
         backgroundColor: "#ECECEC",
         borderWidth: 2,
-        height: '11%',
         borderColor: "#8B4513", // Brown accent
         borderRadius: 8,
         padding: 10,
@@ -222,9 +218,11 @@ const styles = StyleSheet.create({
         opacity: 0.0,
     },
     taskText: {
-        flex: 1,
         color: "#333",
-        fontSize: 16,
+        fontSize: 20,
+        fontWeight: "bold",
+        textAlign: "center", // Center the text horizontally
+        flexShrink: 1, // Prevent text from overflowing
     },
     xpText: {
         color: "#666",
