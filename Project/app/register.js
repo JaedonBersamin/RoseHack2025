@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5f5dc',
         justifyContent: 'center',
         alignItems: 'center',
+        paddingBottom: 550,
     },
     innerContainer: {
         width: '80%',
