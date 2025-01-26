@@ -9,10 +9,8 @@ import {
 } from 'react-native';
 
 export default function Register() {
-    // Animation value
     const fadeAnim = useRef(new Animated.Value(0)).current;
 
-    // Start the fade-in animation on mount
     useEffect(() => {
         Animated.timing(fadeAnim, {
             toValue: 1,
@@ -23,7 +21,6 @@ export default function Register() {
 
     return (
         <View style={styles.container}>
-            {/* Wrap content in an Animated.View to fade it in */}
             <Animated.View style={[styles.innerContainer, { opacity: fadeAnim }]}>
                 <Text style={styles.header}>Register</Text>
 
@@ -49,26 +46,21 @@ export default function Register() {
 }
 
 const styles = StyleSheet.create({
-    // Main container fills screen with cream background,
-    // centered horizontally & vertically
     container: {
         flex: 1,
-        backgroundColor: '#f5f5dc', // cream color
+        backgroundColor: '#f5f5dc',
         justifyContent: 'center',
         alignItems: 'center',
     },
-    // Center content, optionally fix the width
     innerContainer: {
         width: '80%',
         alignItems: 'center',
     },
-    // Large heading
     header: {
         fontFamily: 'Verdana',
         fontSize: 24,
         marginBottom: 16,
     },
-    // Label style
     label: {
         fontFamily: 'Verdana',
         fontSize: 16,
@@ -76,7 +68,6 @@ const styles = StyleSheet.create({
         marginLeft: '10%',
         marginBottom: 4,
     },
-    // Pill-shaped text input
     input: {
         width: '80%',
         borderRadius: 9999,
@@ -88,14 +79,12 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         fontFamily: 'Verdana',
     },
-    // Pill-shaped button container
     button: {
         backgroundColor: 'darkgreen',
         borderRadius: 9999,
         paddingVertical: 12,
         paddingHorizontal: 24,
     },
-    // Button text
     buttonText: {
         color: '#fff',
         fontFamily: 'Verdana',
