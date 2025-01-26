@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 import {
     View,
     Text,
@@ -10,7 +10,10 @@ import {
 } from 'react-native';
 
 export default function Register({ navigation }) {
-    // Animation value for fade-in
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
     const fadeAnim = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
@@ -22,6 +25,54 @@ export default function Register({ navigation }) {
         animation.start();
         return () => animation.stop(); // Cleanup animation
     }, [fadeAnim]);
+
+
+    const handleRegister = async () => {
+        try {
+            let usersResponse = await fetch('http://localhost:8082/api/users', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            let users = await usersResponse.json();
+
+            for (const user of users) {
+                console.log("email", user.email, "username", user.username);
+                if (user.email === email || user.username === username) {
+                    console.error("Email or username taken");
+                    return;
+                }
+            }
+
+            let createResponse = await fetch('http://localhost:8082/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username,
+                    password,
+                    email,
+                    streak: 1,
+                    tasks: [],
+                    level: 1,
+                    xp_points: 0
+                }),
+            });
+
+            const data = await createResponse.json();
+            if (!createResponse.ok) {
+                console.error('Error creating user:', data.error);
+                return;
+            }
+
+            console.log('User created:', data);
+        } catch (error) {
+            console.error('Error creating user:', error.message);
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -47,25 +98,31 @@ export default function Register({ navigation }) {
                     style={styles.input}
                     placeholder="Enter your email"
                     placeholderTextColor="#888"
+                    onChangeText={setEmail}
                 />
                 <Text style={styles.label}>Username</Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Enter your username"
+                    onChangeText={setUsername}
                     placeholderTextColor="#888"
                 />
                 <Text style={styles.label}>Password</Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Enter your password"
-                    placeholderTextColor="#888"s
+                    placeholderTextColor="#888"
                     secureTextEntry
+                    onChangeText={setPassword}
                 />
                 <TouchableOpacity
                     style={[styles.loginButton, { marginTop: 15 }]}
-                    onPress={() => console.log('Create button pressed')}
+                    onPress={() => {
+                        console.log('Create button pressed');
+                        handleRegister();
+                    }}
                 >
-                    <Text style={styles.loginButtonText}>Create</Text>
+                    <Text style={styles.loginButtonText}>Register</Text>
                 </TouchableOpacity>
 
                 {/* Move the "Back to Login" button here */}
