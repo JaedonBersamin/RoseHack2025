@@ -27,8 +27,13 @@ export default function Login({ navigation }) {
         <View style={styles.container}>
             {/* Fade-in contents */}
             <Animated.View style={[styles.innerContainer, { opacity: fadeAnim }]}>
+                <Image
+                    style={styles.logo}
+                    source={require('../assets/logo.png')}
+                />
+
                 <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>
-                    <Text style={{fontSize: 50, fontWeight: 'bold', fontFamily: 'System', color: 'green', outline:100 }}>
+                    <Text style={{ fontSize: 50, fontWeight: 'bold', fontFamily: 'System', color: 'green', outline: 100 }}>
                         Fresh
                     </Text>
                     <Text style={{ fontSize: 50, fontWeight: 'bold', fontFamily: 'System', color: 'brown', marginLeft: 10 }}>
@@ -41,32 +46,30 @@ export default function Login({ navigation }) {
                 <TextInput
                     style={styles.input}
                     placeholder="Enter your email"
+                    placeholderTextColor="#888"
                 />
                 <Text style={styles.label}>Password</Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Enter your password"
+                    placeholderTextColor="#888"
                     secureTextEntry
                 />
                 <TouchableOpacity
-                    style={styles.loginButton}
+                    style={[styles.loginButton, { marginTop: 15 }]}
                     onPress={() => console.log('Login button pressed')}
                 >
                     <Text style={styles.loginButtonText}>Login</Text>
                 </TouchableOpacity>
-            </Animated.View>
 
-            <Image
-                style={styles.logo}
-                source={require('../assets/logo.png')}
-            />
-            {/* Button at the bottom to create a new account */}
-            <TouchableOpacity
-                style={styles.bottomButton}
-                onPress={() => navigation.navigate('Register')}
-            >
-                <Text style={styles.bottomButtonText}>Create a new account</Text>
-            </TouchableOpacity>
+                {/* Move the "Create a new account" button here */}
+                <TouchableOpacity
+                    style={styles.bottomButton}
+                    onPress={() => navigation.navigate('Register')}
+                >
+                    <Text style={styles.bottomButtonText}>Create a new account</Text>
+                </TouchableOpacity>
+            </Animated.View>
         </View>
     );
 }
@@ -74,24 +77,24 @@ export default function Login({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f5f5dc', // cream color
-        justifyContent: 'space-between',
+        backgroundColor: '#f6f6f6', // cream color
+        justifyContent: 'space-between', // Center the contents vertically
         alignItems: 'center',
-        paddingVertical: 40,
+        paddingVertical: 15,
     },
     innerContainer: {
         width: '80%',
         alignItems: 'center',
     },
     logo: {
-        width: 200,
-        height: 200,
-        marginBottom: 40,
+        width: 150,
+        height: 150,
+        marginBottom: -50,
     },
     header: {
         fontFamily: 'Verdana',
         fontSize: 24,
-        marginBottom: 16,
+        marginBottom: 45,
     },
     label: {
         fontFamily: 'Verdana',
@@ -116,6 +119,7 @@ const styles = StyleSheet.create({
         borderRadius: 9999,
         paddingVertical: 12,
         paddingHorizontal: 24,
+        marginBottom: 16, // Add spacing between the two buttons
     },
     loginButtonText: {
         color: '#fff',
@@ -123,14 +127,14 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     bottomButton: {
+        borderRadius: 9999,
         paddingVertical: 12,
         paddingHorizontal: 16,
         alignSelf: 'center',
     },
     bottomButtonText: {
+        color: 'darkgreen',
         fontFamily: 'Verdana',
         fontSize: 16,
-        color: 'blue',
-        textDecorationLine: 'underline',
     },
 });
