@@ -68,7 +68,9 @@ const updateUser = async (req, res) => {
     res.status(200).json(user);
 }
 
-const getUsersByStreak = 
+const getUsersByStreak = async (req, res) => {
+    const users = await User.find({}).sort({streak: -1});
+}
 
 module.exports = {
     getUsers,
