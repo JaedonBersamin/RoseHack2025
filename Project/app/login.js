@@ -80,11 +80,12 @@ const styles = StyleSheet.create({
         fontFamily: 'Verdana',
         fontSize: 16,
         alignSelf: 'flex-start',
+        marginLeft: '10%',
         marginBottom: 4,
     },
     // Pill-shaped text inputs
     input: {
-        width: '100%',
+        width: '80%',
         borderRadius: 9999,
         backgroundColor: '#fff',
         paddingVertical: 8,
