@@ -5,7 +5,6 @@ import Home from "../app/home";
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
-
     return (
         <Tab.Navigator
             screenOptions={{
