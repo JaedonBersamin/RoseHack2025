@@ -37,7 +37,8 @@ export default function Register() {
                     email,
                     streak: 1,
                     tasks: [],
-                    level: 1
+                    level: 1,
+                    xp_points: 0
                 }),
             });
 

@@ -9,7 +9,8 @@ const userSchema = new Schema({
     email: { type: String, required: true, unique: true },
     streak: { type: Number, required: true },
     tasks: {type: [taskSchema], default: []},
-    level: {type: number, required: true},
+    level: {type: Number, required: true},
+    xp_points: {type: Number, required: true},
 }, {timestamps: true});
 
 userSchema.index({ username: 1 }, { unique: true });
