@@ -15,15 +15,16 @@ const XP_NEEDED = 100;
 export default function App() {
     // Simple list of tasks, each with 10 XP
     const initialTasks = [
-        { id: 1, text: "Complete daily workout", xp: 10 },
-        { id: 2, text: "Finish coding challenge", xp: 10 },
-        { id: 3, text: "Read 10 pages of a book", xp: 10 },
-        { id: 4, text: "Practice piano for 30 minutes", xp: 10 },
-        { id: 5, text: "Write in journal", xp: 10 },
-        { id: 6, text: "Meditate for 10 minutes", xp: 10 },
-        { id: 7, text: "Learn 5 new vocabulary words", xp: 10 },
-        { id: 8, text: "Drink 2 liters of water", xp: 10 },
-        { id: 9, text: "Organize workspace", xp: 10 },
+        { id: 1, text: "Pick up 10 pieces of litter in your area", xp: 10 },
+        { id: 2, text: "Plant a tree or care for a plant", xp: 10 },
+        { id: 3, text: "Spend 10 minutes separating recyclables", xp: 10 },
+        { id: 4, text: "Avoid single-use plastics for the day", xp: 10 },
+        { id: 5, text: "Switch off unused lights and appliances", xp: 10 },
+        { id: 6, text: "Use public transport, bike, or walk instead of driving", xp: 10 },
+        { id: 7, text: "Compost food scraps instead of throwing them away", xp: 10 },
+        { id: 8, text: "Research and share one tip for saving water", xp: 10 },
+        { id: 9, text: "Support a local eco-friendly business", xp: 10 },
+        { id: 10, text: "Educate someone about reducing waste", xp: 10 },
     ];
 
     const [tasks, setTasks] = useState(initialTasks);
