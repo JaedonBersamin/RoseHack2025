@@ -8,7 +8,8 @@ import {
     Animated
 } from 'react-native';
 
-export default function Register() {
+export default function Login({ navigation }) {
+    // Animation value for fade-in
     const fadeAnim = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
@@ -21,8 +22,9 @@ export default function Register() {
 
     return (
         <View style={styles.container}>
+            {/* Fade-in contents */}
             <Animated.View style={[styles.innerContainer, { opacity: fadeAnim }]}>
-                <Text style={styles.header}>Register</Text>
+                <Text style={styles.header}>Login</Text>
 
                 <Text style={styles.label}>Username</Text>
                 <TextInput
@@ -37,39 +39,52 @@ export default function Register() {
                     secureTextEntry
                 />
 
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>Register</Text>
+                <TouchableOpacity style={styles.loginButton}>
+                    <Text style={styles.loginButtonText}>Login</Text>
                 </TouchableOpacity>
             </Animated.View>
+
+            {/* Button at the bottom to create a new account */}
+            <TouchableOpacity
+                style={styles.bottomButton}
+                onPress={() => navigation.navigate('Register')}
+            >
+                <Text style={styles.bottomButtonText}>Create a new account</Text>
+            </TouchableOpacity>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    // Cream background & space-between so the bottom button is pinned
     container: {
         flex: 1,
-        backgroundColor: '#f5f5dc',
-        justifyContent: 'center',
+        backgroundColor: '#f5f5dc',  // cream color
+        justifyContent: 'space-between',
         alignItems: 'center',
+        paddingVertical: 40,
     },
+    // Center the login form contents
     innerContainer: {
         width: '80%',
         alignItems: 'center',
     },
+    // Header text (Verdana)
     header: {
         fontFamily: 'Verdana',
         fontSize: 24,
         marginBottom: 16,
     },
+    // Labels
     label: {
         fontFamily: 'Verdana',
         fontSize: 16,
         alignSelf: 'flex-start',
-        marginLeft: '10%',
         marginBottom: 4,
     },
+    // Pill-shaped text inputs
     input: {
-        width: '80%',
+        width: '100%',
         borderRadius: 9999,
         backgroundColor: '#fff',
         paddingVertical: 8,
@@ -79,15 +94,26 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         fontFamily: 'Verdana',
     },
-    button: {
+    // Pill-shaped login button
+    loginButton: {
         backgroundColor: 'darkgreen',
         borderRadius: 9999,
         paddingVertical: 12,
         paddingHorizontal: 24,
     },
-    buttonText: {
+    loginButtonText: {
         color: '#fff',
         fontFamily: 'Verdana',
         fontSize: 16,
+    },
+    // Bottom button to register
+    bottomButton: {
+        // Placed at the very bottom via 'space-between' in the container
+    },
+    bottomButtonText: {
+        fontFamily: 'Verdana',
+        fontSize: 16,
+        color: 'blue',
+        textDecorationLine: 'underline',
     },
 });
