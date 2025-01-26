@@ -24,10 +24,10 @@ const getUser = async (req, res) => {
 }
 
 const createUser = async (req, res) => {
-    const {username, password, email, streak, tasks} = req.body;
+    const {username, password, email, streak, tasks, level} = req.body;
 
     try {
-        const user = await User.create({username, password, email, streak, tasks});
+        const user = await User.create({username, password, email, streak, tasks, level});
         res.status(200).json(user);
     } catch (error) {
         res.status(400).json({error: error.message});

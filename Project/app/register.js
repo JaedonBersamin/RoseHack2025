@@ -37,6 +37,7 @@ export default function Register() {
                     email,
                     streak: 1,
                     tasks: [],
+                    level: 1
                 }),
             });
 
