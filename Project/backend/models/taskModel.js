@@ -6,5 +6,9 @@ const taskSchema = new Schema({
     xp: { type: Number, required: true }
 }, {timestamps: true});
 
-module.exports = mongoose.model('Task', taskSchema);
+const Task = mongoose.model('Task', taskSchema);
 
+module.exports = {
+    taskSchema,
+    Task
+};

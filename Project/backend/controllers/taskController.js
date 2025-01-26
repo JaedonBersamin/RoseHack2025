@@ -1,4 +1,4 @@
-const Task = require('../models/taskModel');
+const { Task } = require('../models/taskModel');
 const mongoose = require('mongoose');
 
 const getTasks = async (req, res) => {
