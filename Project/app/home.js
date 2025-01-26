@@ -15,8 +15,8 @@ export default function Home() {
                     <Header title="Grading Scale" />
                 </View>
 
-                <View className="flex-1">
-                    {/*<TabNavigator />*/}
+                <View>
+                    <TabNavigator />
                 </View>
             </View>
         </TailwindProvider>
