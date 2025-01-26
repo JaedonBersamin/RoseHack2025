@@ -23,19 +23,19 @@ export default function Register() {
         <View style={styles.container}>
             <Animated.View style={[styles.innerContainer, { opacity: fadeAnim }]}>
                 <Text style={styles.header}>Register</Text>
-                <Text style={styles.label}>Email</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Enter your email"/>
+
                 <Text style={styles.label}>Username</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder="Enter your username"/>
+                    placeholder="Enter your username"
+                />
 
                 <Text style={styles.label}>Password</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder="Enter your password" secureTextEntry/>
+                    placeholder="Enter your password"
+                    secureTextEntry
+                />
 
                 <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonText}>Register</Text>
