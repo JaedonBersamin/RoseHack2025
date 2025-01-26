@@ -5,8 +5,12 @@ import {
     TextInput,
     TouchableOpacity,
     StyleSheet,
-    Animated
+    Animated,
+    Image
 } from 'react-native';
+import {
+    fontFamily
+} from "tailwindcss-react-native/dist/postcss/to-react-native/properties/font-family";
 
 export default function Login({ navigation }) {
     // Animation value for fade-in
@@ -24,6 +28,12 @@ export default function Login({ navigation }) {
         <View style={styles.container}>
             {/* Fade-in contents */}
             <Animated.View style={[styles.innerContainer, { opacity: fadeAnim }]}>
+                <View className={'justify'}>
+                    <Text style={[styles.title, { fontSize: 50, fontWeight: 'bold',
+                        padding:40, fontFamily:'tahoma'}]}>Fresh</Text>
+                    <Text style={[styles.title, { fontSize: 50, fontWeight: 'bold',
+                        padding:40, fontFamily:'tahoma'}]}> Step</Text>
+                </View>
                 <Text style={styles.header}>Login</Text>
 
                 <Text style={styles.label}>Username</Text>
@@ -31,19 +41,19 @@ export default function Login({ navigation }) {
                     style={styles.input}
                     placeholder="Enter your username"
                 />
-
                 <Text style={styles.label}>Password</Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Enter your password"
                     secureTextEntry
                 />
-
                 <TouchableOpacity style={styles.loginButton}>
                     <Text style={styles.loginButtonText}>Login</Text>
                 </TouchableOpacity>
             </Animated.View>
 
+            <Image style={styles.logo}
+                   source={require('../assets/logo.png')} />
             {/* Button at the bottom to create a new account */}
             <TouchableOpacity
                 style={styles.bottomButton}
@@ -69,6 +79,11 @@ const styles = StyleSheet.create({
         width: '80%',
         alignItems: 'center',
     },
+    logo:{
+        width:200,
+        height:200,
+        marginBottom: 40,
+    },
     // Header text (Verdana)
     header: {
         fontFamily: 'Verdana',
@@ -80,11 +95,12 @@ const styles = StyleSheet.create({
         fontFamily: 'Verdana',
         fontSize: 16,
         alignSelf: 'flex-start',
+        marginLeft: '10%',
         marginBottom: 4,
     },
     // Pill-shaped text inputs
     input: {
-        width: '100%',
+        width: '80%',
         borderRadius: 9999,
         backgroundColor: '#fff',
         paddingVertical: 8,
