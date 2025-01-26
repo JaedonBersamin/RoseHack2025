@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 import {
     View,
     Text,
@@ -9,6 +9,10 @@ import {
 } from 'react-native';
 
 export default function Register() {
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
     const fadeAnim = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
@@ -19,6 +23,54 @@ export default function Register() {
         }).start();
     }, [fadeAnim]);
 
+
+    const handleRegister = async () => {
+        try {
+            let usersResponse = await fetch('http://localhost:8082/api/users', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            let users = await usersResponse.json();
+
+            for (const user of users) {
+                console.log("email", user.email, "username", user.username);
+                if (user.email === email || user.username === username) {
+                    console.error("Email or username taken");
+                    return;
+                }
+            }
+
+            let createResponse = await fetch('http://localhost:8082/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username,
+                    password,
+                    email,
+                    streak: 1,
+                    tasks: [],
+                    level: 1,
+                    xp_points: 0
+                }),
+            });
+
+            const data = await createResponse.json();
+            if (!createResponse.ok) {
+                console.error('Error creating user:', data.error);
+                return;
+            }
+
+            console.log('User created:', data);
+        } catch (error) {
+            console.error('Error creating user:', error.message);
+        }
+    }
+
     return (
         <View style={styles.container}>
             <Animated.View style={[styles.innerContainer, { opacity: fadeAnim }]}>
@@ -26,18 +78,25 @@ export default function Register() {
                 <Text style={styles.label}>Email</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder="Enter your email"/>
+                    placeholder="Enter your email"
+                    onChangeText={setEmail}
+                />
                 <Text style={styles.label}>Username</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder="Enter your username"/>
+                    placeholder="Enter your username"
+                    onChangeText={setUsername}
+                />
 
                 <Text style={styles.label}>Password</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder="Enter your password" secureTextEntry/>
+                    placeholder="Enter your password"
+                    secureTextEntry
+                    onChangeText={setPassword}
+                />
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={handleRegister}>
                     <Text style={styles.buttonText}>Register</Text>
                 </TouchableOpacity>
             </Animated.View>
