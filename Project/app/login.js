@@ -6,14 +6,20 @@ import {
     TouchableOpacity,
     StyleSheet,
     Animated,
-    Image
+    Image,
+    Alert
 } from 'react-native';
+import Home from "./home"
 
 export default function Login({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     async function handleLogin() {
+        if (!email || !password) {
+            alert("Please enter a valid email and password");
+        }
+
         try {
             const response = await fetch('http://localhost:8082/api/users', {
                 method: 'GET',
@@ -24,20 +30,22 @@ export default function Login({ navigation }) {
 
             const data = await response.json();
             if (!response.ok) {
-                console.error('Error creating user:', data.error);
+                console.error('Error retrieving users:', data.error);
                 return;
             }
 
             console.log('Users retrieved:', data);
-            for (const user of data) {
-                if (user.email === email && user.password === password) {
-                    console.log("User found");
-                    return;
-                }
+            const user = data.find(user => user.email === email && user.password === password);
+
+            if (user) {
+                console.log('User found');
+                navigation.navigate({Home});
+            } else {
+                alert('Invalid email or password.');
             }
-            console.log("User not found");
         } catch (error) {
             console.error('Error retrieving user:', error.message);
+            Alert.alert('Error', 'Unable to login. Please try again later.', [{ text: 'OK' }]);
         }
     }
 
@@ -90,19 +98,23 @@ export default function Login({ navigation }) {
                 />
                 <TouchableOpacity
                     style={[styles.loginButton, { marginTop: 15 }]}
-                    onPress={() => console.log('Login button pressed')}
+                    onPress={(() => {
+                        console.log('Login button pressed');
+
+                        if (email && password) {
+                            navigation.navigate('Home');
+                        }
+                    })}
                 >
                     <Text style={styles.loginButtonText} onPress={handleLogin}>Login</Text>
                 </TouchableOpacity>
-            </Animated.View>
-
-                {/* Move the "Create a new account" button here */}
                 <TouchableOpacity
                     style={styles.bottomButton}
                     onPress={() => navigation.navigate('Register')}
                 >
                     <Text style={styles.bottomButtonText}>Create a new account</Text>
                 </TouchableOpacity>
+            </Animated.View>
         </View>
     );
 }

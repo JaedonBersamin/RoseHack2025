@@ -28,6 +28,10 @@ export default function Register({ navigation }) {
 
 
     const handleRegister = async () => {
+        if (!email || !password || !username) {
+            alert("Please enter a valid email and password");
+        }
+
         try {
             let usersResponse = await fetch('http://localhost:8082/api/users', {
                 method: 'GET',
@@ -41,7 +45,7 @@ export default function Register({ navigation }) {
             for (const user of users) {
                 console.log("email", user.email, "username", user.username);
                 if (user.email === email || user.username === username) {
-                    console.error("Email or username taken");
+                    alert("Email or username taken");
                     return;
                 }
             }
@@ -120,6 +124,9 @@ export default function Register({ navigation }) {
                     onPress={() => {
                         console.log('Create button pressed');
                         handleRegister();
+
+                        if (email && password) {
+                          navigation.navigate('Home')}
                     }}
                 >
                     <Text style={styles.loginButtonText}>Register</Text>
